@@ -36,7 +36,8 @@ router.post("/:_id/deposit", async (req, res) => {
           type: "Deposit",
           amount,
           from,
-          timestamp
+          status:"pending",
+          timestamp,
         },
       ],
     });
@@ -65,6 +66,55 @@ router.post("/:_id/deposit", async (req, res) => {
 
   } catch (error) {
     console.log(error);
+  }
+});
+
+
+router.put("/:_id/transactions/:transactionId/confirm", async (req, res) => {
+  
+  const { _id } = req.params;
+  const { transactionId } = req.params;
+
+  const user = await UsersDatabase.findOne({ _id });
+
+  if (!user) {
+    res.status(404).json({
+      success: false,
+      status: 404,
+      message: "User not found",
+    });
+
+    return;
+  }
+
+  try {
+    const depositsArray = user.transactions;
+    const depositsTx = depositsArray.filter(
+      (tx) => tx._id === transactionId
+    );
+
+    depositsTx[0].status = "Approved";
+    // console.log(withdrawalTx);
+
+    // const cummulativeWithdrawalTx = Object.assign({}, ...user.withdrawals, withdrawalTx[0])
+    // console.log("cummulativeWithdrawalTx", cummulativeWithdrawalTx);
+
+    await user.updateOne({
+      transactions: [
+        ...user.transactions
+        //cummulativeWithdrawalTx
+      ],
+    });
+
+    res.status(200).json({
+      message: "Transaction approved",
+    });
+
+    return;
+  } catch (error) {
+    res.status(302).json({
+      message: "Opps! an error occured",
+    });
   }
 });
 
