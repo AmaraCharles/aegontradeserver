@@ -279,7 +279,7 @@ const sendwelcomeEmail = async ({ to, token }) => {
   });
 
   let info = await transporter.sendMail({
-    from:  '"Aegontrade" <support@aegontrade.com>', // sender address
+    from:  'Aegontrade <support@aegontrade.com>', // sender address
     to: to, // list of receivers
     subject: "Account Verification", // Subject line
     // text: "Hello ?", // plain text body
