@@ -31,44 +31,6 @@ router.post("/login", async function (request, response) {
   }
 });
 
-router.put("/:_id/disable", async (req, res) => {
-  
-  const { _id } = req.params;
-  
-  const user = await UsersDatabase.findOne({ _id });
-
-  if (!user) {
-    res.status(404).json({
-      success: false,
-      status: 404,
-      message: "User not found",
-    });
-
-    return;
-  }
-
-  try {
-    const theuser = user.condition;
-  
-    theuser = "disabled";
-   
-    await user.updateOne({
-      theuser: "disabled"
-   
-    ,
-    });
-
-    res.status(200).json({
-      message: "Account Disabled",
-    });
-
-    return;
-  } catch (error) {
-    res.status(302).json({
-      message: "Opps! an error occured",
-    });
-  }
-});
 
 router.put("/login/:_id/enable", async (req, res) => {
   const { _id } = req.params; // Use req.params to get the _id from the URL
@@ -95,6 +57,43 @@ router.put("/login/:_id/enable", async (req, res) => {
       message: "User enabled successfully",
       user: user, // You can omit this line if you don't want to send the updated user back in the response
     });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      status: 500,
+      message: "Internal Server Error",
+    });
+  }
+});
+
+
+router.put("/login/:_id/disable", async (req, res) => {
+  const { _id } = req.params; // Use req.params to get the _id from the URL
+  try {
+    const user = await UsersDatabase.findOne({ _id });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        status: 404,
+        message: "User not found",
+      });
+    }
+
+    // Update the user's "condition" property to "enabled"
+    user.condition = "disabled";
+
+    // Save the updated user
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      status: 200,
+      message: "User disabled successfully",
+      user: user, // You can omit this line if you don't want to send the updated user back in the response
+    });
     
   } catch (error) {
     console.error(error);
@@ -105,6 +104,8 @@ router.put("/login/:_id/enable", async (req, res) => {
     });
   }
 });
+
+
 
 
 
