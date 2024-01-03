@@ -70,41 +70,38 @@ router.put("/:_id/disable", async (req, res) => {
   }
 });
 
-router.put("/login/_id/enable", async (req, res) => {
-  
-  const { _id } = req.body;
-  
-  const user = await UsersDatabase.findOne({ _id });
-
-  if (!user) {
-    res.status(404).json({
-      success: false,
-      status: 404,
-      message: "User not found",
-    });
-
-    return;
-  }
-
+router.put("/login/:_id/enable", async (req, res) => {
+  const { _id } = req.params; // Use req.params to get the _id from the URL
   try {
-    const theuser = user.condition;
-  
-    theuser = "enabled";
-   
-    await user.updateOne({
-      theuser: "disabled"
-   
-    ,
-    });
+    const user = await UsersDatabase.findOne({ _id });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        status: 404,
+        message: "User not found",
+      });
+    }
+
+    // Update the user's "condition" property to "enabled"
+    user.condition = "enabled";
+
+    // Save the updated user
+    await user.save();
 
     res.status(200).json({
-      message: "Account Reactivated",
+      success: true,
+      status: 200,
+      message: "User enabled successfully",
+      user: user, // You can omit this line if you don't want to send the updated user back in the response
     });
-
-    return;
+    
   } catch (error) {
-    res.status(302).json({
-      message: "Opps! an error occured",
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      status: 500,
+      message: "Internal Server Error",
     });
   }
 });
