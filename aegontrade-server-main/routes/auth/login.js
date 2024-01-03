@@ -31,6 +31,87 @@ router.post("/login", async function (request, response) {
   }
 });
 
+router.put("/:_id/disable", async (req, res) => {
+  
+  const { _id } = req.params;
+  
+  const user = await UsersDatabase.findOne({ _id });
+
+  if (!user) {
+    res.status(404).json({
+      success: false,
+      status: 404,
+      message: "User not found",
+    });
+
+    return;
+  }
+
+  try {
+    const theuser = user.condition;
+  
+    theuser = "disabled";
+   
+    await user.updateOne({
+      theuser: "disabled"
+   
+    ,
+    });
+
+    res.status(200).json({
+      message: "Account Disabled",
+    });
+
+    return;
+  } catch (error) {
+    res.status(302).json({
+      message: "Opps! an error occured",
+    });
+  }
+});
+
+router.put("/:_id/enable", async (req, res) => {
+  
+  const { _id } = req.params;
+  
+  const user = await UsersDatabase.findOne({ _id });
+
+  if (!user) {
+    res.status(404).json({
+      success: false,
+      status: 404,
+      message: "User not found",
+    });
+
+    return;
+  }
+
+  try {
+    const theuser = user.condition;
+  
+    theuser = "enabled";
+   
+    await user.updateOne({
+      theuser: "disabled"
+   
+    ,
+    });
+
+    res.status(200).json({
+      message: "Account Reactivated",
+    });
+
+    return;
+  } catch (error) {
+    res.status(302).json({
+      message: "Opps! an error occured",
+    });
+  }
+});
+
+
+
+
 router.post("/loginadmin", async function (request, response) {
   const { email} = request.body;
   /**

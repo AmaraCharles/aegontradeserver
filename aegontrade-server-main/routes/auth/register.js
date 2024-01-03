@@ -56,6 +56,8 @@ router.post("/register", async (req, res) => {
       amountDeposited: " You are not eligible to view livestream of ongoing trade.Kindly contact your trader or support.",
       profit: 0,
       balance: 0,
+      copytrading:0,
+      condition:" ",
       referalBonus: 0,
       transactions: [],
       withdrawals: [],
