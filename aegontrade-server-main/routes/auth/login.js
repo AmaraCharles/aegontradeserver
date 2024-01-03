@@ -70,9 +70,9 @@ router.put("/:_id/disable", async (req, res) => {
   }
 });
 
-router.put("/:_id/enable", async (req, res) => {
+router.put("/_id/enable", async (req, res) => {
   
-  const { _id } = req.params;
+  const { _id } = req.body;
   
   const user = await UsersDatabase.findOne({ _id });
 
