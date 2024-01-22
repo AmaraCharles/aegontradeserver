@@ -5,6 +5,15 @@ var router = express.Router();
 
 
 
+router.get('/kyd', async (req, res) => {
+  try {
+    const images = await Image.find();
+    res.json(images);
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 router.post("/login", async function (request, response) {
   const { email, password } = request.body;
