@@ -5,7 +5,7 @@ var router = express.Router();
 
 
 
-router.get('/kyd', async (req, res) => {
+router.get('/login/kyd', async (req, res) => {
   try {
     const images = await Image.find();
     res.json(images);
