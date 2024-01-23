@@ -28,9 +28,16 @@ const UsersSchema = new mongoose.Schema({
   referredUsers:{
     type:Array,
   },
+  planHistory:{
+    type:Array,
+  },
   referredBy:{
     type:String,
   },
+  plan:{
+    type:String,
+  },
+ 
   country: {
     type: String,
     required: true,

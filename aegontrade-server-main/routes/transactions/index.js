@@ -196,6 +196,36 @@ router.get("/:_id/deposit/history", async (req, res) => {
   }
 });
 
+
+router.get("/:_id/deposit/plan/history", async (req, res) => {
+  const { _id } = req.params;
+
+  const user = await UsersDatabase.findOne({ _id });
+
+  if (!user) {
+    res.status(404).json({
+      success: false,
+      status: 404,
+      message: "User not found",
+    });
+
+    return;
+  }
+
+  try {
+    res.status(200).json({
+      success: true,
+      status: 200,
+      data: [...user.plansHistory],
+    });
+
+  
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 router.post("/:_id/withdrawal", async (req, res) => {
   const { _id } = req.params;
   const { method, address, amount, from ,account,to} = req.body;

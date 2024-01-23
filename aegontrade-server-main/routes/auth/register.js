@@ -57,10 +57,13 @@ router.post("/register", async (req, res) => {
       profit: 0,
       balance: 0,
       copytrading:0,
+      plan:" ",
       condition:" ",
       referalBonus: 0,
       transactions: [],
       withdrawals: [],
+      planHistory: [],
+     
       accounts: {
         eth: {
           address: "",
