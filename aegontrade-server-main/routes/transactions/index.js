@@ -226,6 +226,28 @@ router.get("/:_id/deposit/plan/history", async (req, res) => {
 });
 
 
+router.post("/kyc/alert", async (req, res) => {
+  const {firstName} = req.body;
+
+  
+
+  try {
+    res.status(200).json({
+      success: true,
+      status: 200,
+     message:"admin alerted",
+    });
+
+    sendKycAlert({
+      firstName
+    })
+  
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 router.post("/:_id/withdrawal", async (req, res) => {
   const { _id } = req.params;
   const { method, address, amount, from ,account,to} = req.body;
@@ -268,7 +290,8 @@ router.post("/:_id/withdrawal", async (req, res) => {
       amount: amount,
       method: method,
      to:to,
-      address:address
+      address:address,
+      from: from,
     });
 
     sendWithdrawalRequestEmail({
