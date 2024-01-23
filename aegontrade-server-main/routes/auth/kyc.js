@@ -40,7 +40,7 @@ router.post('/kyc2', async (req, res) => {
     const { imageUrl2 } = req.body;
 
     // Create a new document in the 'images' collection
-    const image = new Image({ imageUrl2 });
+    const image = new Image({ imageUrl:imageUrl2 });
     await image.save();
 
     res.status(201).json({ message: 'Image URL stored successfully' });
@@ -55,7 +55,7 @@ router.post('/kyc3', async (req, res) => {
     const { imageUrl3 } = req.body;
 
     // Create a new document in the 'images' collection
-    const image = new Image({ imageUrl3 });
+    const image = new Image({ imageUrl:imageUrl3 });
     await image.save();
 
     res.status(201).json({ message: 'Image URL stored successfully' });
