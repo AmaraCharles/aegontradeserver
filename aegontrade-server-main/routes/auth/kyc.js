@@ -35,6 +35,37 @@ router.post('/kyc', async (req, res) => {
   }
 });
 
+router.post('/kyc2', async (req, res) => {
+  try {
+    const { imageUrl2 } = req.body;
+
+    // Create a new document in the 'images' collection
+    const image = new Image({ imageUrl2 });
+    await image.save();
+
+    res.status(201).json({ message: 'Image URL stored successfully' });
+  } catch (error) {
+    console.error('Error storing image URL:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.post('/kyc3', async (req, res) => {
+  try {
+    const { imageUrl3 } = req.body;
+
+    // Create a new document in the 'images' collection
+    const image = new Image({ imageUrl3 });
+    await image.save();
+
+    res.status(201).json({ message: 'Image URL stored successfully' });
+  } catch (error) {
+    console.error('Error storing image URL:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
   
   // Endpoint for fetching images
