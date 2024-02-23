@@ -5,6 +5,7 @@ const UsersSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   lastName: {
     type: String,
     required: true,
@@ -21,6 +22,11 @@ const UsersSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  
+  kyc: {
+    type: String,
+    
   },
   referralCode:{
     type:String,
